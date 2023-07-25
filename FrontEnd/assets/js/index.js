@@ -24,7 +24,7 @@ const getWorks = async () => {
             data.forEach((project) => { 
 
                 createProject(project);                        
-            
+                
             });              
         })
         .catch((error) => {
@@ -48,11 +48,12 @@ function createProject(project) {
     const figcaptionProject = document.createElement("figcaption");
     figcaptionProject.innerText = project.title;
 
-    idByCategory(project.category.name);
+    //idByCategory(project.category.name);
 
     figureProject.appendChild(imageProject);
     figureProject.appendChild(figcaptionProject);
     gallery.appendChild(figureProject);
+
 };
 
 
@@ -92,10 +93,13 @@ function buttonFilter(project) {
     flitreBtn.setAttribute("data-id", project.id);
     flitreBtn.innerText = project.name;
     idFiltre.appendChild(flitreBtn);
+    
 
     flitreBtn.addEventListener("click", () => {
-        idByCategory(project);
+        
 
+       
+     console.log(project.id)
 })}
     
 
@@ -103,23 +107,23 @@ getCategories();
 
 let tritous = document.querySelector(".filter");
 
- tritous.addEventListener("click", function () {
+ tritous.addEventListener("click", function (project) {
     
-    console.log("tri")
+    console.log(project.id)
 
 });
-const flitreBtns = document.getElementById("#idbtn")
+//const flitreBtns = document.getElementById("#idbtn")
 
+    //function idByCategory(id){
+    //console.log(Object.values(urlworks).filter( work => work.id === id));
+//}  
 
+//async function idcat(){
+//const CategoryUrl = urlcategory.map ( idCategory => idCategory.id)
+//console.log("id")
+//}
 
-      
-
-    function idByCategory(id){
-    console.log(Object.values(urlworks).filter( work => work.id === id));
-}  
-
-
-
-
-
+const btnfliter = getCategories.fliter (function(projet){
+            return projet.id === projet.categoryId ;
+        });
 
