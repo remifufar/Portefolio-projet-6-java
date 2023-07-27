@@ -161,6 +161,16 @@ li:hover {
 	border-radius: 60px;
 	white-space: nowrap;
 }
+
+.filter:hover {
+	background-color: rgba(29, 97, 84, 1);
+	color: #ffffff;
+}
+
+.is-active {
+	background-color: rgba(29, 97, 84, 1);
+	color: #ffffff;
+}
 #contact {
 	width: 50%;
 margin: auto;
