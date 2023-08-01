@@ -41,10 +41,10 @@ async function getWorks(categoryId) {
             data.forEach((project) => {
 
                 if (categoryId == project.category.id || categoryId == null) {
-                    createProject(project);
+                    createProject(project);                    
                 }
-
-
+                
+                
 
             });
         })
@@ -100,27 +100,27 @@ async function getCategories() {
         .then(() => {
             //on récupère les boutons
             const buttons = document.querySelectorAll("#filtres .filter");
-
+      
             buttons.forEach((button) => {
-                //Pour chaque bouton, au clic
-                button.addEventListener("click", function () {
-                    // Get (et Affiche le data-tag)
-                    let buttonTag = button.getAttribute("data-tag");
-                    console.log(buttonTag);
-
-                    //Get catégorie id
-                    let categorieId = button.getAttribute("data-id");
-                    console.log(categorieId);
-
-                    //on enlève, pour chaque bouton la classe is-active
-                    buttons.forEach((button) => button.classList.remove("is-active"));
-                    //puis on ajoute la classe active au bouton cliqué
-                    this.classList.add("is-active");
-                    // On récupère les works de l'API en fonction des categories
-                    getWorks(categorieId);
-                });
+              //Pour chaque bouton, au clic
+              button.addEventListener("click", function () {
+                // Get (et Affiche le data-tag)
+                let buttonTag = button.getAttribute("data-tag");
+                console.log(buttonTag);
+      
+                //Get catégorie id
+                let categorieId = button.getAttribute("data-id");
+                console.log(categorieId);
+      
+                //on enlève, pour chaque bouton la classe is-active
+                buttons.forEach((button) => button.classList.remove("is-active"));
+                //puis on ajoute la classe active au bouton cliqué
+                this.classList.add("is-active");
+                // On récupère les works de l'API en fonction des categories
+                getWorks(categorieId);
+              });
             });
-        })
+          })
         .catch((error) => {
             console.log(error);
 
@@ -138,7 +138,7 @@ function buttonFilter(categorie) {
     flitreBtn.innerText = categorie.name;
     filtres.appendChild(flitreBtn);
 
-
+    
     /*flitreBtn.addEventListener("click", () => {
 
 
@@ -161,7 +161,7 @@ function buttonFilter(categorie) {
 
 //function idByCategory(id){
 //console.log(Object.values(urlworks).filter( work => work.id === id));
-//}
+//}  
 
 //async function idcat(){
 //const CategoryUrl = urlcategory.map ( idCategory => idCategory.id)
