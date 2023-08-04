@@ -8,7 +8,9 @@ const filtres = document.getElementById("filtres");
 
 const gallery = document.getElementById("gallery");
 const sectionPortfolio = document.getElementById("portfolio");
-
+const modif = document.querySelector(".modif");
+const modif2 = document.querySelector(".modif2");
+const H2 = document.querySelector(".titre");
 
 
 async function main() {
@@ -131,43 +133,28 @@ function buttonFilter(categorie) {
     console.log(categorie)
 
     const flitreBtn = document.createElement("button");
-    //flitreBtn.id = "idbtn"
+    
     flitreBtn.classList.add("filter");
     flitreBtn.setAttribute("data-tag", categorie.name);
     flitreBtn.setAttribute("data-id", categorie.id);
     flitreBtn.innerText = categorie.name;
     filtres.appendChild(flitreBtn);
 
-    
-    /*flitreBtn.addEventListener("click", () => {
-
-
-
-        console.log(categorie.id)
-    })*/
 }
 
+var token = sessionStorage.getItem("token");
+    if ( token ) {
+        filtres.style.display ="none";
+        gallery.style.paddingTop = " 75px";
+        modif.style.display = "inline-block";
+        modif2.style.display = "block";
+        H2.style.paddingLeft = " 14px ";
 
-//getCategories();
+    console.log(token);
 
-//let tritous = document.querySelector(".filter");
-
-//tritous.addEventListener("click", function (project) {
-
-//console.log(project.id)
-
-//});
-//const flitreBtns = document.getElementById("#idbtn")
-
-//function idByCategory(id){
-//console.log(Object.values(urlworks).filter( work => work.id === id));
-//}  
-
-//async function idcat(){
-//const CategoryUrl = urlcategory.map ( idCategory => idCategory.id)
-//console.log("id")
-//}
-
-/*const btnfliter = getCategories.fliter(function (projet) {
-    return projet.id === projet.categoryId;
-});*/
+    }
+    else ; {
+        
+        
+    };
+  

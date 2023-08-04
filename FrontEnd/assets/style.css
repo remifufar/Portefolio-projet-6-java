@@ -79,11 +79,38 @@ h1 > span {
 }
 
 h2{
+	margin-top: 95px;
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: #1D6154;
+    
 }
+.modif{
+	display: none;
+	font-family: 'Work Sans';
+	font-size: 13px;
+	font-weight: 400;
+	letter-spacing: 0.1em;
+	margin-top: 4px;
+	color:black;
+	padding-left: 30px;
+	
+}
+
+.modif2{
+	display: none;
+	font-family: 'Work Sans';
+	font-size: 13px;
+	font-weight: 400;
+	letter-spacing: 0.1em;
+	margin-top: 4px;
+	color:black;
+	padding-left: 60px;
+	margin-top: 30px;
+
+}
+
 nav ul {
 	display: flex;
 	align-items: center;
@@ -118,6 +145,7 @@ a:hover {
 	display: block;
 	margin: auto;
 	width: 80%;
+	margin-bottom: 20px;
 }
 
 #introduction article {
@@ -153,7 +181,12 @@ a:hover {
 	padding-top: 20px;
 	padding-bottom: 50px;
 }
+#filtres {
+padding-top: 3px;
+
+}
 .filter {
+	
 	display: flex;
 	align-items: center;
 	height: 37px;
