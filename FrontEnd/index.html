@@ -38,7 +38,7 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2 class="titre">Mes Projets <span class="modif"> <i class="fa-solid fa-pen-to-square fa-lg"></i> Modifier</span> </h2>
+		<h2 class="titre">Mes Projets <a href="#"  class="modif"> <i class="fa-solid fa-pen-to-square fa-lg"></i> Modifier</a> </h2>
 		
 		<div class="button_filter " id="filtres">
 			<button class="filter is-active">Tous</button>
@@ -47,6 +47,7 @@
 			
 		</div>
 	</section>
+
 	<section id="contact">
 		<h2>Contact</h2>
 		<p>Vous avez un projet ? Discutons-en !</p>
@@ -60,6 +61,22 @@
 			<input type="submit" value="Envoyer">
 		</form>
 	</section>
+
+	<aside id="modal_1">
+		<div id="modal_wrapper_1">
+			<div id="modal1">
+				<button id="modal_close"><i class="fa-solid fa-xmark"></i></button>
+				<h2 class="modal_title">Galerie photo</h2>
+				<span id="empty-gallery-msg">La galerie est vide, cliquez sur le bouton ci-dessous pour ajouter une photo.</span>
+				<span class="error-msg"></span>
+				<div class="modalGallery"></div>
+				<hr>
+				<button class="submit_button">Ajouter une photo</button>
+				<a id="delete_gallery" href="#">Supprimer la galerie</a>
+			</div>
+		</div>
+	</aside>
+
 </main>
 
 <footer>
@@ -69,9 +86,10 @@
 		</ul>
 	</nav>
 </footer>
-</body>
 
 <script src="./assets/js/index.js"></script>
-<!--<script src="./assets/js/categories.js"></script>
-<script src="./assets/js/flitre.js"></script>-->
+<script src="./assets/js/modal.js"></script>
+</body>
+
+
 </html>

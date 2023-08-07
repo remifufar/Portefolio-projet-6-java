@@ -43,7 +43,7 @@ async function getWorks(categoryId) {
             data.forEach((project) => {
 
                 if (categoryId == project.category.id || categoryId == null) {
-                    createProject(project);                    
+                    createProject(project);                
                 }
                 
                 
@@ -142,6 +142,9 @@ function buttonFilter(categorie) {
 
 }
 
+
+
+
 var token = sessionStorage.getItem("token");
     if ( token ) {
         filtres.style.display ="none";
@@ -154,7 +157,6 @@ var token = sessionStorage.getItem("token");
 
     }
     else ; {
-        
         
     };
   
