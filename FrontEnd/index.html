@@ -12,17 +12,22 @@
 	<script src="https://kit.fontawesome.com/8e51572be2.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<header>
+	
+<header >
+	<div class ="header"></div>
+	<div class="titre-header">
 	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
 	<nav>
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li ><a href="./login.html">login</li></a>
+			<li class="login"><a href="./login.html">login</li></a>
+			<li class="logout">logout</li>
 			<li></a><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 			
 		</ul>
 	</nav>
+</div>
 </header>
 <main>
 	<section id="introduction">
@@ -61,7 +66,7 @@
 			<input type="submit" value="Envoyer">
 		</form>
 	</section>
-
+<section>
 	<aside id="modal_1">
 		<div id="modal_wrapper_1">
 			<div id="modal1">
@@ -70,13 +75,60 @@
 				<span id="empty-gallery-msg">La galerie est vide, cliquez sur le bouton ci-dessous pour ajouter une photo.</span>
 				<span class="error-msg"></span>
 				<div class="modalGallery"></div>
+				<span class="error-message"></span>
+				<span class="suppression-réussite"></span>
 				<hr>
 				<button class="submit_button">Ajouter une photo</button>
 				<a id="delete_gallery" href="#">Supprimer la galerie</a>
+				
 			</div>
 		</div>
-	</aside>
+	</aside> 
 
+	<aside id="modal_2">
+		<div id="modal_wrapper_2">
+			<div id="modal2">
+				<button class="arrow"><i class="fa-solid fa-arrow-left-long"></i></button>
+				<button id="modal_close2"><i class="fa-solid fa-xmark"></i></button>
+				<h2 class="modal_title">Ajout photo</h2>
+
+				<form id="formAddImage">
+					<img id="imagePreview" src="#" alt="Peview image">
+					<div class="image_container">
+						<i class="fa-solid fa-image"></i>
+
+						<div id="input_image_container">
+
+							<label for="file" class="add-photo-button">+ Ajouter une
+								photo</label>
+							<input type="file" id="file" name="photo" onchange="previewImage(event);">
+						</div>
+
+						<span id="image_restriction">jpg, png : 4mo max</span>
+					</div>
+
+					<div class="title">
+						<label for="input-title">Titre</label>
+						<input type="text" name="title" id="input-title">
+					</div>
+
+					<div class="category">
+						<label for="category">Catégorie</label>
+						<select name="category" id="category">
+							<option value="0" disabled selected hidden label="Choisissez une option"> </option>
+							<option value="1">Objets</option>
+							<option value="2">Appartements</option>
+							<option value="3">Hotels & restaurants</option>
+						</select>
+					</div>
+					<hr>
+					<input type="submit" class="submit_button2" value="Valider">
+				</form>
+			</div>
+
+		</div>
+	</aside>
+</section>
 </main>
 
 <footer>
@@ -88,7 +140,7 @@
 </footer>
 
 <script src="./assets/js/index.js"></script>
-<script src="./assets/js/modal.js"></script>
+
 </body>
 
 
