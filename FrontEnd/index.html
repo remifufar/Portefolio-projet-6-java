@@ -8,6 +8,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
+
 	<link rel="stylesheet" href="./assets/style.css">
 	<script src="https://kit.fontawesome.com/8e51572be2.js" crossorigin="anonymous"></script>
 </head>
@@ -92,16 +93,20 @@
 				<button id="modal_close2"><i class="fa-solid fa-xmark"></i></button>
 				<h2 class="modal_title">Ajout photo</h2>
 
-				<form id="formAddImage">
-					<img id="imagePreview" src="#" alt="Peview image">
+
+				
+
+				<form method="post"  id="image" enctype="multipart/form-data">
+
 					<div class="image_container">
-						<i class="fa-solid fa-image"></i>
+						<i class="fa-solid fa-image" id="logoPhoto"></i>
 
 						<div id="input_image_container">
 
-							<label for="file" class="add-photo-button">+ Ajouter une
+							<label for="file" id="btnPhoto" class="add-photo-button">+ Ajouter une
 								photo</label>
-							<input type="file" id="file" name="photo" onchange="previewImage(event);">
+							<input type="file" id="file" name="file"  accept="image/*" onchange="getImage(event);">
+							<img id="Preview" src="" alt="" id="photoInput">
 						</div>
 
 						<span id="image_restriction">jpg, png : 4mo max</span>
@@ -124,7 +129,7 @@
 					<hr>
 					<input type="submit" class="submit_button2" value="Valider">
 				</form>
-			</div>
+			</img>
 
 		</div>
 	</aside>

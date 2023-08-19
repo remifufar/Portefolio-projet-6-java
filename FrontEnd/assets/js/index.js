@@ -27,7 +27,7 @@ const errors = document.querySelector(".error-message");
 const suppression = document.querySelector(".suppression-réussite");
 const arrow = document.querySelector(".arrow");
 
-
+const submitWork = document.querySelector(".submit_button2");
 async function main() {
     await getWorks();
     await getCategories()
@@ -173,7 +173,7 @@ if (token) {
     H2.style.paddingLeft = " 14px ";
     login.style.display = "none"
     logout.style.display = "block"
-     menuNoir();
+    menuNoir();
     console.log(token);
 
 }
@@ -185,10 +185,10 @@ logout.addEventListener("click", () => {
     sessionStorage.removeItem("token")
     window.location.href = "index.html"
     confirm("voulez-vous vous deconnecter ?")
-    
+
 })
 
-function menuNoir (){
+function menuNoir() {
 
     const menu = document.createElement("div")
     menu.classList.add("blocNoir");
@@ -203,7 +203,7 @@ function menuNoir (){
     const publier = document.createElement("div");
     publier.innerText = "publier les changements";
     publier.classList.add("publier")
-        
+
     header.appendChild(menu);
     menu.appendChild(edition);
     menu.appendChild(publier);
@@ -245,9 +245,9 @@ function gestionModale() {
     closeModal2.addEventListener('click', function () {
         closeModal(modal2);
     });
-   
- 
-    
+
+
+
     // Fermeture de la première modale en cliquant en dehors de la fenêtre
     window.addEventListener("click", (event) => {
         if (event.target === modal1) {
@@ -262,7 +262,7 @@ function createProjectModal(project) {
     console.log(modalGallery);
 
     const figureModal = document.createElement("figure");
-    figureModal.setAttribute("data-id",project.id)
+    figureModal.setAttribute("data-id", project.id)
     figureModal.classList.add("modal_figure");
 
     const imageModal = document.createElement("img");
@@ -277,7 +277,7 @@ function createProjectModal(project) {
     deleteBtn.dataset.projectId = project.id;
     const iconDeleteModal = document.createElement("i");
     iconDeleteModal.classList.add("fa-solid", "fa-trash-can");
-    
+
     const moveBtn = document.createElement("div");
     moveBtn.classList.add("move-btn");
     const iconMoveModal = document.createElement("i");
@@ -293,36 +293,109 @@ function createProjectModal(project) {
     moveBtn.appendChild(iconMoveModal);
     modalGallery.appendChild(figureModal);
 
-    deleteBtn.addEventListener("click", function (event){
+    deleteBtn.addEventListener("click", function (event) {
         console.log(project.id)
         btnDelete(project.id)
         event.preventDefault();
 
     })
-  }
+}
 
-   function btnDelete (project){
-   
- fetch("http://localhost:5678/api/works/"+ project, {
+function btnDelete(project) {
+
+    fetch("http://localhost:5678/api/works/" + project, {
         method: 'DELETE',
         headers: {
             authorization: `Bearer ${sessionStorage.getItem("token")}`,
             Accept: "application/json",
-            "content-type":"application/json",
+            "content-type": "application/json",
         }
     }
-      ) 
-    .then((res) => {
-        if (res.ok) {
-         figureModal();
-          confirm("Voulez-vous vraiment supprimer la galerie?");
-          console.log("Galerie supprimée !");
-        }
-      })
-      .catch((error) => {
-        console.log("Une erreur c'est produite" + error);
-      });
-     
+    )
+        .then((res) => {
+            if (res.ok) {
+                figureModal();
+                confirm("Voulez-vous vraiment supprimer la galerie?");
+                console.log("Galerie supprimée !");
+            }
+        })
+        .catch((error) => {
+            console.log("Une erreur c'est produite" + error);
+        });
+
     console.log(project.id);
 }
+
+// vue photo au telechargement
+
+const Preview = document.getElementById("Preview");
+const fileUpload = document.getElementById("file");
+const photoButton = document.getElementById("btnPhoto")
+const restriction = document.getElementById("image_restriction")
+const logoPhoto = document.getElementById("logoPhoto")
+
+fileUpload.addEventListener("change", getImage,);
+
+function getImage (event)
+{
+
     
+    if(event.target.files.length> 0){
+ let src = URL.createObjectURL(event.target.files[0]);
+
+Preview.src = src;
+
+}
+photoButton.style.display ="none"
+restriction.style.display ="none"
+logoPhoto.style.display ="none"
+}
+
+     
+/* creation works  */
+const titleInput = document.getElementById("input-title")
+const category = document.getElementById("category")
+
+function NewWork() {
+
+
+
+    submitWork.addEventListener("click", (e) => {
+            e.preventDefault();
+        if (Preview.value === '' || titleInput.value === '' || category.value === '') {
+            
+            return;
+        }
+        try {
+            const formData = new FormData();
+            formData.append("title", titleInput.value);
+            formData.append("category", category.value);
+            formData.append("image", Preview.value);
+    
+            const response =  fetch("http://localhost:5678/api/works", {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                    Accept: "application/json",
+                    "content-type": "application/json",
+                },
+                body: formData,
+            }
+    
+    )
+    if (response.status === 201) {}} 
+    
+
+       catch (error) {
+        console.error(error);
+        alert("Une erreur s'est produite. Veuillez réessayer plus tard.");
+    }
+        
+        
+        } )
+         
+
+
+
+}
+NewWork();
