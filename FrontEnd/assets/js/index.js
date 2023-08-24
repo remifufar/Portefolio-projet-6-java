@@ -27,12 +27,19 @@ const errors = document.querySelector(".error-message");
 const suppression = document.querySelector(".suppression-réussite");
 const arrow = document.querySelector(".arrow");
 
-const submitWork = document.querySelector(".submit_button2");
+const formAddWork = document.querySelector("#formAddWork");
+const imageReset = document.getElementById("image_container");
+
+
+const btnX = document.querySelector(".x")
+const message = document.getElementById("error-message")
+
+
 async function main() {
     await getWorks();
     await getCategories()
     gestionModale();
-
+   await NewWork();
 
 }
 
@@ -55,12 +62,14 @@ async function getWorks(categoryId) {
 
             //on vide les galleries
             gallery.innerHTML = "";
+            modalGallery.innerHTML = "";
 
             data.forEach((project) => {
 
                 if (categoryId == project.category.id || categoryId == null) {
                     createProject(project);
                     createProjectModal(project);
+                    
                 }
 
 
@@ -236,14 +245,17 @@ function gestionModale() {
 
     openModal2.addEventListener('click', function () {
         closeModal(modal1);
-        openModal(modal2)
+        openModal(modal2) 
     });
     arrow.addEventListener('click', function () {
         openModal(modal1);
         closeModal(modal2);
+        reset()
+        
     });
     closeModal2.addEventListener('click', function () {
         closeModal(modal2);
+        reset()
     });
 
 
@@ -255,6 +267,8 @@ function gestionModale() {
         }
         if (event.target === modal2) {
             closeModal(modal2);
+            reset()
+            
         }
     });
 }
@@ -295,6 +309,7 @@ function createProjectModal(project) {
 
     deleteBtn.addEventListener("click", function (event) {
         console.log(project.id)
+
         btnDelete(project.id)
         event.preventDefault();
 
@@ -302,7 +317,7 @@ function createProjectModal(project) {
 }
 
 function btnDelete(project) {
-
+    
     fetch("http://localhost:5678/api/works/" + project, {
         method: 'DELETE',
         headers: {
@@ -314,9 +329,8 @@ function btnDelete(project) {
     )
         .then((res) => {
             if (res.ok) {
-                figureModal();
-                confirm("Voulez-vous vraiment supprimer la galerie?");
-                console.log("Galerie supprimée !");
+                getWorks();
+                console.log("Projet n°" + project + " supprimée !");
             }
         })
         .catch((error) => {
@@ -332,70 +346,106 @@ const Preview = document.getElementById("Preview");
 const fileUpload = document.getElementById("file");
 const photoButton = document.getElementById("btnPhoto")
 const restriction = document.getElementById("image_restriction")
-const logoPhoto = document.getElementById("logoPhoto")
+const container1 = document.getElementById("image_container")
+const container2 = document.querySelector(".container2")
 
-fileUpload.addEventListener("change", getImage,);
 
-function getImage (event)
-{
+fileUpload.addEventListener("change", getImage,)
+;
 
+function getImage(event) {
+
+
+    if (event.target.files.length > 0) {
+        let src = URL.createObjectURL(event.target.files[0]);
+        
+        Preview.src = src;
+       
+    }
     
-    if(event.target.files.length> 0){
- let src = URL.createObjectURL(event.target.files[0]);
-
-Preview.src = src;
-
-}
-photoButton.style.display ="none"
-restriction.style.display ="none"
-logoPhoto.style.display ="none"
+    container1.style.display="none";
+    btnX.style.visibility= "visible"
+    
 }
 
-     
+
 /* creation works  */
-const titleInput = document.getElementById("input-title")
-const category = document.getElementById("category")
+const titleInput = document.getElementById("input-title");
+const category = document.getElementById("category");
+const mss = document.getElementById("error-message")
+const submitWork = document.querySelector(".submit_button2");
 
-function NewWork() {
 
-
-
-    submitWork.addEventListener("click", (e) => {
-            e.preventDefault();
-        if (Preview.value === '' || titleInput.value === '' || category.value === '') {
+formAddWork.addEventListener("submit", (e) => {
+       e.preventDefault()
+       NewWork(e)
+        
+        if (fileUpload.value === '' || titleInput.value === '' || category.value === '') {
             
-            return;
+            mss.style.display ="flex"
+            mss.style.color="red"
+            mss.innerText="Veuillez remplir tous les champs pour ajouter un projet"
         }
-        try {
-            const formData = new FormData();
+       else{
+        
+        reset()
+        mss.style.display ="flex"
+        mss.style.color="green"
+        mss.innerText="projet enregistré"
+        
+       }
+    })
+
+async function NewWork() {
+    
+   const formData = new FormData();
             formData.append("title", titleInput.value);
             formData.append("category", category.value);
-            formData.append("image", Preview.value);
-    
-            const response =  fetch("http://localhost:5678/api/works", {
+            formData.append("image", fileUpload.files[0]);
+
+             fetch("http://localhost:5678/api/works", {
                 method: "POST",
                 headers: {
-                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-                    Accept: "application/json",
-                    "content-type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,                   
                 },
                 body: formData,
             }
+            )
+
+        } 
+
+
     
-    )
-    if (response.status === 201) {}} 
+
+
+ function reset (){
+
+    formAddWork.reset();
+    Preview.src=""
+    photoButton.style.display = "block"
+    restriction.style.display = "block"
+    container1.style.display="flex"
+    btnX.style.visibility= "hidden"
     
-
-       catch (error) {
-        console.error(error);
-        alert("Une erreur s'est produite. Veuillez réessayer plus tard.");
-    }
-        
-        
-        } )
-         
-
-
-
 }
-NewWork();
+
+btnX.addEventListener("click", function(){
+Preview.src=""
+btnX.style.visibility= "hidden"
+container1.style.display="flex"
+reset()
+})
+
+function btnDisabled (){
+ if (fileUpload.value === '' || titleInput.value === '' || category.value === ''){
+    
+    submitWork.disabled= false
+    
+ }
+ else{
+    submitWork.disabled= true
+    submitWork.style.cursor = "grab"
+    submitWork.style.background="red"
+}
+}
+btnDisabled ()

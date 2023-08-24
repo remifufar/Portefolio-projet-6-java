@@ -73,7 +73,7 @@
 			<div id="modal1">
 				<button id="modal_close"><i class="fa-solid fa-xmark"></i></button>
 				<h2 class="modal_title">Galerie photo</h2>
-				<span id="empty-gallery-msg">La galerie est vide, cliquez sur le bouton ci-dessous pour ajouter une photo.</span>
+				
 				<span class="error-msg"></span>
 				<div class="modalGallery"></div>
 				<span class="error-message"></span>
@@ -96,28 +96,34 @@
 
 				
 
-				<form method="post"  id="image" enctype="multipart/form-data">
+				<form method="post"  id="formAddWork" enctype="multipart/form-data">
 
-					<div class="image_container">
-						<i class="fa-solid fa-image" id="logoPhoto"></i>
-
+					<div class="image_container" id="image_container">
+						
+						<i class="fa-regular fa-image "></i>
 						<div id="input_image_container">
-
+							
 							<label for="file" id="btnPhoto" class="add-photo-button">+ Ajouter une
 								photo</label>
-							<input type="file" id="file" name="file"  accept="image/*" onchange="getImage(event);">
-							<img id="Preview" src="" alt="" id="photoInput">
+							
 						</div>
 
 						<span id="image_restriction">jpg, png : 4mo max</span>
 					</div>
+
+					<div class="container2">
+                   <input type="file" id="file" name="file"  accept="image/*" onchange="getImage(event);">
+					<img id="Preview" src="" alt="" id="photoInput">
+					<span class="x">X</span>
+				</div>
+
 
 					<div class="title">
 						<label for="input-title">Titre</label>
 						<input type="text" name="title" id="input-title">
 					</div>
 
-					<div class="category">
+					<div class="category ">
 						<label for="category">Catégorie</label>
 						<select name="category" id="category">
 							<option value="0" disabled selected hidden label="Choisissez une option"> </option>
@@ -127,9 +133,10 @@
 						</select>
 					</div>
 					<hr>
-					<input type="submit" class="submit_button2" value="Valider">
+					<span id="error-message" class="paragraph-error"></span>
+					<input type="submit" class="submit_button2"  value="Valider" disabled>
 				</form>
-			</img>
+			</div>
 
 		</div>
 	</aside>
