@@ -39,8 +39,7 @@ async function main() {
     await getWorks();
     await getCategories()
     gestionModale();
-   await NewWork();
-
+     utilisateur ();
 }
 
 main()
@@ -171,8 +170,10 @@ function buttonFilter(categorie) {
 }
 
 
+/** connection utilisateur */
 
 
+function utilisateur (){
 var token = sessionStorage.getItem("token");
 if (token) {
     filtres.style.display = "none";
@@ -186,15 +187,21 @@ if (token) {
     console.log(token);
 
 }
-else; {
 
-};
-
+}
+    
+   
 logout.addEventListener("click", () => {
+    
+    const deconnecter = confirm("voulez-vous vous deconnecter ?")
+
+    if(deconnecter == true){
     sessionStorage.removeItem("token")
     window.location.href = "index.html"
-    confirm("voulez-vous vous deconnecter ?")
-
+    }
+    else{
+        return false
+    }
 })
 
 function menuNoir() {
@@ -272,6 +279,9 @@ function gestionModale() {
         }
     });
 }
+
+
+/***creation de la gallerie modale  */
 function createProjectModal(project) {
     console.log(modalGallery);
 
@@ -309,9 +319,16 @@ function createProjectModal(project) {
 
     deleteBtn.addEventListener("click", function (event) {
         console.log(project.id)
-
+     const confirme =  confirm('voulez-vous supprimé ce projet ?')
+       if ( confirme == true){
+        
         btnDelete(project.id)
         event.preventDefault();
+    
+    }
+        else{
+            return false
+        }
 
     })
 }
@@ -330,6 +347,7 @@ function btnDelete(project) {
         .then((res) => {
             if (res.ok) {
                 getWorks();
+                
                 console.log("Projet n°" + project + " supprimée !");
             }
         })
@@ -339,6 +357,7 @@ function btnDelete(project) {
 
     console.log(project.id);
 }
+
 
 // vue photo au telechargement
 
@@ -378,27 +397,7 @@ const submitWork = document.querySelector(".submit_button2");
 
 formAddWork.addEventListener("submit", (e) => {
        e.preventDefault()
-       NewWork(e)
-        
-        if (fileUpload.value === '' || titleInput.value === '' || category.value === '') {
-            
-            mss.style.display ="flex"
-            mss.style.color="red"
-            mss.innerText="Veuillez remplir tous les champs pour ajouter un projet"
-        }
-       else{
-        
-        reset()
-        mss.style.display ="flex"
-        mss.style.color="green"
-        mss.innerText="projet enregistré"
-        
-       }
-    })
-
-async function NewWork() {
-    
-   const formData = new FormData();
+        const formData = new FormData();
             formData.append("title", titleInput.value);
             formData.append("category", category.value);
             formData.append("image", fileUpload.files[0]);
@@ -409,14 +408,41 @@ async function NewWork() {
                     Authorization: `Bearer ${sessionStorage.getItem("token")}`,                   
                 },
                 body: formData,
-            }
-            )
+            })
+            .then((response) => {
+                //si status 200 on stocke les donnees dans le json
+                if (response.ok) {
+                getWorks();
+                closeModal(modal2)
+                closeModal(modal1);
+                reset (modal2)
+                  return response.json();
+                  
+                  //si les deux champs ne matchent pas
+                } else if (response.status === 400) {
+                  console.log("Unauthorized");
+                  error.innerText = "Mauvaise demande";
+                  //si utilisateur inconnu dans la base
+                } else if (response.status === 401) {
+                  console.log("User not found");
+                  error.innerText = "Non autorisée";
+                }
+                else if (response.status === 500) {
+                    console.log("User not found");
+                    error.innerText = "Erreur inattendue";
+                  }
+              })
 
-        } 
-
+            .catch((error) => {
+                console.log(error);
+            });
+        }) 
+        
+    
+    
+/***fonction reset  */
 
     
-
 
  function reset (){
 
@@ -426,7 +452,8 @@ async function NewWork() {
     restriction.style.display = "block"
     container1.style.display="flex"
     btnX.style.visibility= "hidden"
-    
+    submitWork.disabled = true; 
+    submitWork.style.background = "#A7A7A7" 
 }
 
 btnX.addEventListener("click", function(){
@@ -434,18 +461,29 @@ Preview.src=""
 btnX.style.visibility= "hidden"
 container1.style.display="flex"
 reset()
+ submitWork.disabled = true; 
+submitWork.style.background = "#A7A7A7" 
 })
 
-function btnDisabled (){
- if (fileUpload.value === '' || titleInput.value === '' || category.value === ''){
+
+
+/** bouton valider au formulaire  */
+
+
+fileUpload.addEventListener("change", btnActive)
+category.addEventListener("change", btnActive ) 
+titleInput.addEventListener("change", btnActive);
+
+
+
+submitWork.disabled = true;
+
+function btnActive (){
+    if (fileUpload.value === '' || titleInput.value === '' || category.value === '') {
+        submitWork.disabled = true; 
     
-    submitWork.disabled= false
-    
- }
- else{
-    submitWork.disabled= true
-    submitWork.style.cursor = "grab"
-    submitWork.style.background="red"
-}
-}
-btnDisabled ()
+  } else {
+        submitWork.disabled = false;
+        submitWork.style.background= "#1D6154"
+      }
+    }
